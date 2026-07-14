@@ -221,11 +221,13 @@ function AnimatedText({ text }) {
 function AboutSection({ onContact }) {
   return (
     <section className="about-section" id="about">
-      {aboutDecor.map((item, index) => (
-        <FadeIn key={item.className} delay={0.1 + index * 0.06} x={index < 2 ? -80 : 80} y={0} duration={0.9}>
-          <img className={item.className} src={item.src} alt="" loading="lazy" />
-        </FadeIn>
-      ))}
+      <div className="about-decor-wrap">
+        {aboutDecor.map((item, index) => (
+          <FadeIn key={item.className} delay={0.1 + index * 0.08} y={0} duration={0.6}>
+            <img className={item.className} src={item.src} alt="" loading="lazy" />
+          </FadeIn>
+        ))}
+      </div>
       <div className="about-content">
         <FadeIn y={40}>
           <h2 className="section-title hero-heading">About me</h2>
