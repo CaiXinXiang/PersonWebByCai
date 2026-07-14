@@ -1,0 +1,10 @@
+# 忽略所有的.log文件
+*.log
+# 忽略所有的.tmp目录
+*.tmp/
+# 忽略build目录及其所有内容
+build/
+# 忽略node_modules目录（常用于JavaScript项目）
+node_modules/
+# 忽略所有以.class结尾的文件（例如Java编译后的文件）
+*.class
