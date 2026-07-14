@@ -207,9 +207,9 @@ function AboutSection({ onContact }) {
           <h2 className="section-title hero-heading">关于我</h2>
         </FadeIn>
         <FadeIn delay={0.5} y={20}>
-          <AnimatedText text="It's Thursday, KFC Crazy Thursday! V me 50, and I'll debug your whole life away.
-  养了一只电子龙虾，待投喂中。。。
-  日常跟代码打交道，习惯用 AI 工具提升效率。最大的乐趣是把脑子里一闪而过的念头，变成别人真能用的东西。把技术能做的事，翻译成普通人用得舒服的产品。AI 是加速器，代码是起点。" />
+          <AnimatedText text="It's Thursday, KFC Crazy Thursday! V me 50, and I'll debug your whole life away. 
+  日常跟代码打交道，习惯用 AI 工具提升效率。最大的乐趣是把脑子里一闪而过的念头，变成别人真能用的东西。把技术能做的事，翻译成普通人用得舒服的产品。AI 是加速器，代码是起点。
+  养了一只电子龙虾，待投喂中。。。" />
         </FadeIn>
         <ContactButton onClick={onContact} />
       </div>
