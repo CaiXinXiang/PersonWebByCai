@@ -1,6 +1,10 @@
-﻿import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowUpRight, ExternalLink, FileText, FolderKanban, Github, Home, Mail, Phone } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowUpRight, ChevronDown, ExternalLink, FileText, FolderKanban, Github, Home, Mail, Phone } from 'lucide-react';
+import { marked } from 'marked';
+import funasrDocs from './assets/docs/funasr-docs.md?raw';
+import saucedemoDocs from './assets/docs/saucedemo-test.md?raw';
+
 import moonIcon from '../source/moon_icon.11395d36.png';
 import p59Object from '../source/p59_1.4659672e.png';
 import legoIcon from '../source/lego_icon-1.703bb594.png';
@@ -52,31 +56,9 @@ const projects = [
   },
 ];
 
-const documents = [
-  {
-    number: '01',
-    name: '部署说明',
-    category: 'LocalUseFunasr Docs',
-    href: 'https://github.com/CaiXinXiang/LocalUseFunasr',
-    intro: '记录本地语音识别工具的环境准备、模型选择、WebUI 启动和常见问题处理路径。',
-    points: ['环境搭建', '模型配置', '使用流程'],
-  },
-  {
-    number: '02',
-    name: '测试说明',
-    category: 'SauceDemo Docs',
-    href: 'https://github.com/CaiXinXiang/test_for_saucedemo',
-    intro: '整理自动化测试项目的目录结构、用例设计、脚本执行方式和 Page Object 分层思路。',
-    points: ['用例设计', '脚本执行', '架构说明'],
-  },
-  {
-    number: '03',
-    name: '能力文档',
-    category: 'Portfolio Notes',
-    href: '#about',
-    intro: '沉淀个人项目背后的 AI 工具使用、自动化流程拆解和文档化交付方法。',
-    points: ['AI 工具', '自动化流程', '文档交付'],
-  },
+const docItems = [
+  { number: '01', name: '部署说明', category: 'LocalUseFunasr Docs', raw: funasrDocs, tags: ['环境搭建', '模型配置', '使用流程'] },
+  { number: '02', name: '测试说明', category: 'SauceDemo Docs', raw: saucedemoDocs, tags: ['用例设计', '脚本执行', '架构说明'] },
 ];
 
 function FadeIn({ children, delay = 0, duration = 0.7, x = 0, y = 30, className = '' }) {
@@ -165,7 +147,7 @@ function HeroSection({ onContact }) {
       </FadeIn>
 
       <FadeIn delay={0.15} y={40} className="hero-title-wrap">
-        <h1 className="hero-heading">case web</h1>
+        <h1 className="hero-heading">Hi, I'm Caixx</h1>
       </FadeIn>
 
       <FadeIn delay={0.6} y={30} className="hero-portrait-shell">
@@ -181,19 +163,9 @@ function HeroSection({ onContact }) {
         </div>
       </FadeIn>
 
-      <div className="hero-bottom">
-        <FadeIn delay={0.35} y={20}>
-          <p className="hero-status">
-            {/* <span>个人项目展示</span> */}
-            {/* <span>
-              求职中
-              <i aria-hidden="true">...</i>
-            </span> */}
-          </p>
-        </FadeIn>
-        <FadeIn delay={0.5} y={20}>
-          <ContactButton onClick={onContact} />
-        </FadeIn>
+
+      <div className="hero-contact-bottom-right">
+        <ContactButton onClick={onContact} />
       </div>
     </section>
   );
@@ -205,6 +177,8 @@ function AnimatedText({ text }) {
   return (
     <p className="animated-text" ref={ref}>
       {text.split('').map((char, index) => {
+        if (char === ' ') return <span key={'sp-' + index} style={{display:'inline'}}> </span>;
+        if (char === '\n') return <br key={'br-' + index} />;
         const start = index / text.length;
         const end = Math.min(1, start + 0.16);
         const opacity = useTransform(scrollYProgress, [start, end], [0.2, 1]);
@@ -230,15 +204,18 @@ function AboutSection({ onContact }) {
       </div>
       <div className="about-content">
         <FadeIn y={40}>
-          <h2 className="section-title hero-heading">About me</h2>
+          <h2 className="section-title hero-heading">关于我</h2>
         </FadeIn>
-        <AnimatedText text="我专注于用个人项目验证 AI 工具部署、自动化测试和流程文档化能力。通过 LocalUseFunasr 和 SauceDemo 自动化测试项目，把新工具跑通、把重复流程自动化、把使用说明写清楚。" />
+        <FadeIn delay={0.5} y={20}>
+          <AnimatedText text="It's Thursday, KFC Crazy Thursday! V me 50, and I'll debug your whole life away.
+  养了一只电子龙虾，待投喂中。。。
+  日常跟代码打交道，习惯用 AI 工具提升效率。最大的乐趣是把脑子里一闪而过的念头，变成别人真能用的东西。把技术能做的事，翻译成普通人用得舒服的产品。AI 是加速器，代码是起点。" />
+        </FadeIn>
         <ContactButton onClick={onContact} />
       </div>
     </section>
   );
 }
-
 function ServicesSection() {
   return (
     <section className="services-section" id="services">
@@ -266,63 +243,60 @@ function ServicesSection() {
   );
 }
 
-function DocCard({ item, index, total }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.78', 'start 0.18'] });
-  const targetScale = 1 - (total - 1 - index) * 0.055;
-  const scale = useTransform(scrollYProgress, [0, 1], [1, targetScale]);
-  const y = useTransform(scrollYProgress, [0, 1], [42, 0]);
+function DocAccordionCard({ item, isOpen, onToggle }) {
+  const renderedHtml = useMemo(() => marked.parse(item.raw), [item.raw]);
 
   return (
-    <motion.article
-      className="stack-card"
-      ref={ref}
-      style={{
-        top: `calc(76px + ${index * 34}px)`,
-        zIndex: index + 1,
-        scale,
-        y,
-      }}
-    >
-      <div className="stack-top">
-        <span className="stack-number">{item.number}</span>
-        <div>
-          <p>{item.category}</p>
-          <h3>{item.name}</h3>
+    <div className={`doc-accordion-card${isOpen ? ' open' : ''}`}>
+      <button className="doc-accordion-header" type="button" onClick={onToggle}>
+        <span className="doc-accordion-number">{item.number}</span>
+        <div className="doc-accordion-info">
+          <p className="doc-accordion-category">{item.category}</p>
+          <h3 className="doc-accordion-title">{item.name}</h3>
+          {!isOpen && (
+            <div className="doc-accordion-tags">
+              {item.tags.map((tag) => (
+                <span key={tag} className="doc-tag">{tag}</span>
+              ))}
+            </div>
+          )}
         </div>
-        <a className="live-button" href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer">
-          Read Docs
-        </a>
-      </div>
-      <div className="stack-media">
-        <div className="media-col small">
-          <div>
-            <strong>{item.points[0]}</strong>
-          </div>
-          <div>
-            <strong>{item.points[1]}</strong>
-          </div>
-        </div>
-        <div className="media-col large">
-          <p>{item.intro}</p>
-          <strong>{item.points[2]}</strong>
+        <span className={`doc-accordion-arrow${isOpen ? ' rotated' : ''}`}>
+          <ChevronDown size={28} />
+        </span>
+      </button>
+      <div className="doc-accordion-collapse">
+        <div className="doc-accordion-content">
+          <div className="markdown-body" dangerouslySetInnerHTML={{ __html: renderedHtml }} />
         </div>
       </div>
-    </motion.article>
+    </div>
   );
 }
 
 function ProjectsSection() {
+  const [openIndex, setOpenIndex] = useState(null);
+
   return (
     <section className="projects-stack" id="projects">
       <FadeIn>
         <h2 className="section-title hero-heading">文档</h2>
       </FadeIn>
-      <div className="stack-list">
-        {documents.map((item, index) => (
-          <DocCard item={item} index={index} total={documents.length} key={item.name} />
+      <div className="doc-accordion-list">
+        {docItems.map((item, index) => (
+          <DocAccordionCard
+            key={item.name}
+            item={item}
+            isOpen={openIndex === index}
+            onToggle={() => setOpenIndex(openIndex === index ? null : index)}
+          />
         ))}
-      </div>
+        <FadeIn delay={0.3}>
+          <p className="doc-placeholder">
+            — 等待作者更新 —
+          </p>
+        </FadeIn>
+        </div>
     </section>
   );
 }
@@ -387,3 +361,4 @@ function App() {
 }
 
 export default App;
+

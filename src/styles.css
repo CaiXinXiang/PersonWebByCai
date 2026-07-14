@@ -2,7 +2,7 @@
 
 :root {
   color-scheme: dark;
-  font-family: 'Kanit', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: 'Kanit', sans-serif;
   background: #0c0c0c;
   color: #d7e2ea;
 }
@@ -356,6 +356,7 @@ main {
 }
 
 .animated-text {
+  font-family: 'Kanit', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
   max-width: 620px;
   color: #d7e2ea;
   font-size: clamp(1rem, 2vw, 1.35rem);
@@ -668,7 +669,7 @@ main {
   border: 0;
   background: transparent;
   color: rgba(215, 226, 234, 0.25);
-  font-family: 'PingFang SC', 'Microsoft YaHei', 'Kanit', sans-serif;
+  font-family: 'Kanit', sans-serif;
   font-size: 0.65rem;
   font-weight: 300;
   letter-spacing: 0.04em;
@@ -751,5 +752,336 @@ main {
 
   .live-button {
     width: fit-content;
+  }
+}
+
+/* ── Markdown 文档阅览 ── */
+
+.doc-accordion-list {
+  width: min(100%, 1200px);
+  margin: 60px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 40px;
+}
+
+.doc-accordion-card {
+  border: 2px solid rgba(215, 226, 234, 0.2);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 80% 15%, rgba(182, 0, 168, 0.12), transparent 18rem),
+    #0c0c0c;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.doc-accordion-card.open {
+  border-color: rgba(215, 226, 234, 0.45);
+}
+
+.doc-accordion-header {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 36px);
+  width: 100%;
+  padding: clamp(20px, 2.5vw, 32px) clamp(24px, 3vw, 40px);
+  background: transparent;
+  color: #d7e2ea;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+
+.doc-accordion-header:hover {
+  background: rgba(215, 226, 234, 0.04);
+}
+
+.doc-accordion-number {
+  flex-shrink: 0;
+  font-size: clamp(2.2rem, 6vw, 5rem);
+  font-weight: 900;
+  line-height: 0.8;
+  opacity: 0.8;
+}
+
+.doc-accordion-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.doc-accordion-category {
+  margin-bottom: 2px;
+  color: rgba(215, 226, 234, 0.5);
+  font-size: clamp(0.7rem, 1vw, 0.85rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.doc-accordion-title {
+  font-size: clamp(1.4rem, 3.6vw, 3.6rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.doc-accordion-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.doc-tag {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(215, 226, 234, 0.08);
+  color: rgba(215, 226, 234, 0.7);
+  font-size: clamp(0.7rem, 0.9vw, 0.8rem);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.doc-accordion-arrow {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  color: rgba(215, 226, 234, 0.5);
+  transition: transform 0.35s ease, color 0.3s ease;
+}
+
+.doc-accordion-arrow.rotated {
+  transform: rotate(180deg);
+  color: rgba(215, 226, 234, 0.9);
+}
+
+.doc-accordion-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s ease;
+}
+
+.doc-accordion-card.open .doc-accordion-collapse {
+  grid-template-rows: 1fr;
+}
+
+.doc-accordion-content {
+  overflow: hidden;
+}
+
+/* ── Rendered Markdown ── */
+
+.markdown-body {
+  padding: 0 clamp(24px, 3vw, 40px) clamp(32px, 3vw, 48px);
+  color: rgba(215, 226, 234, 0.92);
+  font-family: 'Kanit', sans-serif;
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  line-height: 1.8;
+}
+
+.markdown-body h1 {
+  margin: 0 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(215, 226, 234, 0.12);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.markdown-body h2 {
+  margin: 28px 0 14px;
+  font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.markdown-body h3 {
+  margin: 22px 0 10px;
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  font-weight: 600;
+  color: #fff;
+}
+
+.markdown-body h4, .markdown-body h5, .markdown-body h6 {
+  margin: 18px 0 8px;
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.markdown-body p {
+  margin-bottom: 16px;
+}
+
+.markdown-body a {
+  color: #b600a8;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: opacity 0.2s;
+}
+
+.markdown-body a:hover {
+  opacity: 0.7;
+}
+
+.markdown-body strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+
+.markdown-body li {
+  margin-bottom: 6px;
+}
+
+.markdown-body code {
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(215, 226, 234, 0.08);
+  color: #e0b3ff;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 0.88em;
+}
+
+.markdown-body pre {
+  margin: 0 0 20px;
+  padding: 18px 20px;
+  overflow-x: auto;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(215, 226, 234, 0.08);
+}
+
+.markdown-body pre code {
+  padding: 0;
+  background: transparent;
+  color: #d7e2ea;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+
+.markdown-body table {
+  width: 100%;
+  margin: 0 0 20px;
+  border-collapse: collapse;
+  font-size: 0.92em;
+}
+
+.markdown-body th,
+.markdown-body td {
+  padding: 10px 14px;
+  border: 1px solid rgba(215, 226, 234, 0.12);
+  text-align: left;
+}
+
+.markdown-body th {
+  background: rgba(215, 226, 234, 0.06);
+  color: #fff;
+  font-weight: 600;
+}
+
+.markdown-body tr:nth-child(even) {
+  background: rgba(215, 226, 234, 0.03);
+}
+
+.markdown-body blockquote {
+  margin: 0 0 20px;
+  padding: 12px 20px;
+  border-left: 4px solid #b600a8;
+  background: rgba(182, 0, 168, 0.06);
+  border-radius: 0 10px 10px 0;
+  color: rgba(215, 226, 234, 0.8);
+}
+
+.markdown-body hr {
+  margin: 28px 0;
+  border: 0;
+  border-top: 1px solid rgba(215, 226, 234, 0.1);
+}
+
+.markdown-body img {
+  max-width: 100%;
+  border-radius: 12px;
+}
+
+.doc-placeholder {
+  padding: 60px 20px 40px;
+  color: rgba(215, 226, 234, 0.3);
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .doc-accordion-header {
+    flex-wrap: wrap;
+    gap: 10px 16px;
+  }
+
+  .doc-accordion-number {
+    font-size: clamp(1.8rem, 10vw, 2.8rem);
+  }
+
+  .doc-accordion-title {
+    font-size: clamp(1.1rem, 5vw, 1.6rem);
+  }
+
+  .doc-accordion-tags {
+    gap: 6px;
+  }
+
+  .doc-tag {
+    font-size: 0.7rem;
+    padding: 3px 10px;
+  }
+
+  .doc-accordion-arrow {
+    width: 32px;
+    height: 32px;
+  }
+
+  .markdown-body {
+    padding-inline: clamp(16px, 4vw, 24px);
+    padding-bottom: 24px;
+    font-size: 0.88rem;
+  }
+
+  .markdown-body pre {
+    padding: 12px 14px;
+  }
+
+  .doc-placeholder {
+    padding: 40px 16px 24px;
+    font-size: 0.95rem;
+  }
+}
+
+
+
+
+
+/* Contact button at bottom-right of hero */
+.hero-contact-bottom-right {
+  position: absolute;
+  bottom: 32px;
+  right: 40px;
+  z-index: 20;
+}
+
+@media (max-width: 768px) {
+  .hero-contact-bottom-right {
+    bottom: 20px;
+    right: 16px;
   }
 }
