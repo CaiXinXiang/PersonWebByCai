@@ -39,7 +39,7 @@ const projects = [
     name: 'LocalUseFunasr',
     category: 'AI Tool / WebUI',
     href: 'https://github.com/CaiXinXiang/LocalUseFunasr',
-    intro: '本地语音识别 WebUI，支持音频上传、实时录音、模型选择、发言人分离、时间戳结果与 TXT 导出。',
+    intro: '基于Funasr的本地语音识别 WebUI，支持中英文及中文部分方言，可进行音频上传、实时录音、模型选择、发言人分离、时间戳结果与 TXT 导出。',
     points: ['FunASR 本地部署', 'WebUI 流程设计', 'TXT 结构化导出'],
   },
   {
@@ -47,7 +47,7 @@ const projects = [
     name: 'SauceDemo Test',
     category: 'Python / Selenium / Pytest',
     href: 'https://github.com/CaiXinXiang/test_for_saucedemo',
-    intro: '基于 SauceDemo 电商演示站的自动化测试项目，覆盖登录、商品浏览、购物车和结算核心链路。',
+    intro: '基于SauceDemo电商演示站的自动化测试项目，覆盖登录、商品浏览、购物车和结算核心链路。',
     points: ['Page Object 重构', 'Excel 用例维护', '12 条核心脚本'],
   },
 ];
@@ -243,7 +243,7 @@ function ServicesSection() {
   return (
     <section className="services-section" id="services">
       <FadeIn>
-        <h2>Projects</h2>
+        <h2>个人项目</h2>
       </FadeIn>
       <div className="service-list">
         {projects.map((project, index) => (
@@ -316,7 +316,7 @@ function ProjectsSection() {
   return (
     <section className="projects-stack" id="projects">
       <FadeIn>
-        <h2 className="section-title hero-heading">Docs</h2>
+        <h2 className="section-title hero-heading">文档</h2>
       </FadeIn>
       <div className="stack-list">
         {documents.map((item, index) => (
