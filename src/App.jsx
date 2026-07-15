@@ -2,8 +2,37 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight, ChevronDown, ExternalLink, FileText, FolderKanban, Github, Home, Mail, Phone } from 'lucide-react';
 import { marked } from 'marked';
-import funasrDocs from './assets/docs/funasr-docs.md?raw';
-import saucedemoDocs from './assets/docs/saucedemo-test.md?raw';
+// 轻量 frontmatter 解析器（浏览器兼容）
+function parseFrontmatter(text) {
+  const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!match) return { data: {}, content: text };
+  const yaml = match[1];
+  const content = text.slice(match[0].length).trim();
+  const data = {};
+  for (const line of yaml.split('\n')) {
+    const idx = line.indexOf(':');
+    if (idx === -1) continue;
+    const key = line.slice(0, idx).trim();
+    let val = line.slice(idx + 1).trim();
+    // 解析 YAML 数组: [a, b, c]
+    if (val.startsWith('[') && val.endsWith(']')) {
+      val = val.slice(1, -1).split(',').map((s) => s.trim().replace(/^["']|["']$/g, ''));
+    }
+    // 解析数字
+    else if (/^\d+$/.test(val)) {
+      val = Number(val);
+    }
+    // 去除引号
+    else {
+      val = val.replace(/^["']|["']$/g, '');
+    }
+    data[key] = val;
+  }
+  return { data, content };
+}
+
+// 自动导入 docs 目录下所有 .md 文件
+const docModules = import.meta.glob('./assets/docs/*.md', { query: '?raw', import: 'default', eager: true });
 
 import moonIcon from '../source/moon_icon.11395d36.png';
 import p59Object from '../source/p59_1.4659672e.png';
@@ -56,10 +85,25 @@ const projects = [
   },
 ];
 
-const docItems = [
-  { number: '01', name: '部署说明', category: 'LocalUseFunasr Docs', raw: funasrDocs, tags: ['环境搭建', '模型配置', '使用流程'] },
-  { number: '02', name: '测试说明', category: 'SauceDemo Docs', raw: saucedemoDocs, tags: ['用例设计', '脚本执行', '架构说明'] },
-];
+const docItems = Object.entries(docModules)
+  .map(([path, raw]) => {
+    const { data, content } = parseFrontmatter(raw);
+    const h1Match = content.match(/^#\s+(.+)$/m);
+    const fallbackName = h1Match ? h1Match[1].replace(/[^\w\u4e00-\u9fff]/g, '').trim() : '';
+    const fileName = path.split('/').pop().replace('.md', '');
+    return {
+      name: data.name || fallbackName || fileName,
+      category: data.category || fileName,
+      tags: data.tags || [],
+      order: data.order ?? 999,
+      raw: content,
+    };
+  })
+  .sort((a, b) => a.order - b.order)
+  .map((item, index) => ({
+    ...item,
+    number: String(index + 1).padStart(2, '0'),
+  }));
 
 function FadeIn({ children, delay = 0, duration = 0.7, x = 0, y = 30, className = '' }) {
   return (

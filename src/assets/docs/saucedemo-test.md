@@ -1,3 +1,10 @@
+---
+name: 测试说明
+category: SauceDemo Docs
+tags: [用例设计, 脚本执行, 架构说明]
+order: 2
+---
+
 # SauceDemo 自动化测试项目
 
 基于 **Python + Selenium + pytest** 的 Web 自动化测试框架，使用 Page Object 设计模式，对 [SauceDemo](https://www.saucedemo.com/) 电商演示站进行端到端功能测试。

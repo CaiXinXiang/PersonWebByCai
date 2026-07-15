@@ -1,3 +1,10 @@
+---
+name: 部署说明
+category: LocalUseFunasr Docs
+tags: [环境搭建, 模型配置, 使用流程]
+order: 1
+---
+
 # 🎤 FunASR 本地语音识别 WebUI
 
 基于 [FunASR](https://github.com/modelscope/FunASR) 和 [Gradio](https://gradio.app/) 的本地语音识别 Web 应用。
