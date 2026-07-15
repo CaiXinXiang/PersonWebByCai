@@ -1,6 +1,6 @@
 ---
-name: 项目说明
-category: 关于软件工程的一些思考
+name: 关于软件工程的一些思考
+category: 一般文档
 tags: [AI编程, 软件工程, 面向结果]
 order: 3
 ---
