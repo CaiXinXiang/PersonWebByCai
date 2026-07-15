@@ -1,3 +1,10 @@
+---
+name: 项目说明
+category: PersonWeb Docs
+tags: [项目介绍, 技术栈, 快速开始]
+order: 3
+---
+
 # Case魔法袋
 
 > 一个使用 React + Vite 构建的个人作品集网站，展示个人项目、技术文档与联系方式。

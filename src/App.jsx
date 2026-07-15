@@ -83,6 +83,14 @@ const projects = [
     intro: '基于SauceDemo电商演示站的自动化测试项目，覆盖登录、商品浏览、购物车和结算核心链路。',
     points: ['Page Object 重构', 'Excel 用例维护', '12 条核心脚本'],
   },
+  {
+    number: '03',
+    name: 'PersonWebByCai',
+    category: 'React / Vite / Framer Motion',
+    href: 'https://github.com/CaiXinXiang/PersonWebByCai',
+    intro: '基于 React + Vite 构建的个人作品集网站，展示个人项目、技术文档与联系方式，包含磁性交互、滚动动画与 Markdown 文档自动渲染等功能。',
+    points: ['响应式动效设计', 'MD 文档自动发现', 'Framer Motion 交互'],
+  },
 ];
 
 const docItems = Object.entries(docModules)
