@@ -7,7 +7,7 @@ order: 3
 
 # Case魔法袋
 
-> 一个使用 React + Vite 构建的个人作品集网站，展示个人项目、技术文档与联系方式。
+> 一个使用 React + Vite 构建的个人作品集网站，展示个人项目、技术文档。
 
 ## ✨ 功能特性
 
@@ -127,12 +127,6 @@ order: 3
 | `order`    | 否   | 排序权重（数字越小越靠前），缺省排到最后    |
 
 > **注意**：新增文件后需重启 dev server（`import.meta.glob` 的限制，HMR 对新增文件不敏感）。
-
-## 📮 联系方式
-
-- 📱 电话：19272704396
-- 📧 邮箱：caixx0932@qq.com
-- 🐙 GitHub：[CaiXinXiang](https://github.com/CaiXinXiang)
 
 ## 📦 项目链接
 
