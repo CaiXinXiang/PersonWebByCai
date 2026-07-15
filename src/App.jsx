@@ -214,11 +214,6 @@ function HeroSection({ onContact }) {
           </Magnet>
         </div>
       </FadeIn>
-
-
-      <div className="hero-contact-bottom-right">
-        <ContactButton onClick={onContact} />
-      </div>
     </section>
   );
 }
@@ -326,7 +321,7 @@ function DocAccordionCard({ item, isOpen, onToggle }) {
   );
 }
 
-function ProjectsSection() {
+function ProjectsSection({ onContact }) {
   const [openIndex, setOpenIndex] = useState(null);
 
   return (
@@ -344,9 +339,13 @@ function ProjectsSection() {
           />
         ))}
         <FadeIn delay={0.3}>
-          <p className="doc-placeholder">
-            — 等待作者更新 —
-          </p>
+          <div className="doc-footer">
+            <p className="doc-placeholder">— 等待懒狗作者更新 —</p>
+            <div className="doc-footer-row">
+              <p className="doc-footer-text">如果你看完以上内容对我感兴趣的话，请联系我！</p>
+              <ContactButton onClick={onContact} />
+            </div>
+          </div>
         </FadeIn>
         </div>
     </section>
@@ -406,7 +405,7 @@ function App() {
      <HeroSection onContact={() => setIsContactOpen(true)} />
      <AboutSection onContact={() => setIsContactOpen(true)} />
       <ServicesSection />
-      <ProjectsSection />
+      <ProjectsSection onContact={() => setIsContactOpen(true)} />
       {isContactOpen && <ContactModal onClose={() => setIsContactOpen(false)} />}
     </main>
   );

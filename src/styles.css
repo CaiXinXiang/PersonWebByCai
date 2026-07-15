@@ -1023,6 +1023,34 @@ main {
   text-align: center;
 }
 
+.doc-footer {
+  padding: 60px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.doc-footer-text {
+  color: rgba(215, 226, 234, 0.55);
+  font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-align: right;
+}
+
+.doc-footer .contact-button {
+  align-self: flex-end;
+}
+
+.doc-footer-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  justify-content: flex-end;
+}
+
 @media (max-width: 760px) {
   .doc-accordion-header {
     flex-wrap: wrap;
@@ -1065,23 +1093,20 @@ main {
     padding: 40px 16px 24px;
     font-size: 0.95rem;
   }
-}
 
+  .doc-footer {
+    align-items: center;
+    padding: 40px 16px 24px;
+  }
 
+  .doc-footer-text {
+    text-align: center;
+  }
 
-
-
-/* Contact button at bottom-right of hero */
-.hero-contact-bottom-right {
-  position: absolute;
-  bottom: 32px;
-  right: 40px;
-  z-index: 20;
-}
-
-@media (max-width: 768px) {
-  .hero-contact-bottom-right {
-    bottom: 20px;
-    right: 16px;
+  .doc-footer-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
   }
 }
+
