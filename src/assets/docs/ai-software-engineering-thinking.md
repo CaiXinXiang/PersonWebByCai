@@ -1,8 +1,8 @@
 ---
-name： 关于软件工程
-category： 一般文档
-tags： [AI编程， 软件工程， 面向结果]
-order： 3
+name: 关于软件工程
+category: 一般文档
+tags: [ai编程, 软件工程, 面向结果]
+order: 3
 ---
 
 # 从面向对象到面向结果？
