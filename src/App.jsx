@@ -407,6 +407,11 @@ function App() {
       <ServicesSection />
       <ProjectsSection onContact={() => setIsContactOpen(true)} />
       {isContactOpen && <ContactModal onClose={() => setIsContactOpen(false)} />}
+      <footer className="site-footer">
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+          鄂ICP备2026036608号-1
+        </a>
+      </footer>
     </main>
   );
 }
